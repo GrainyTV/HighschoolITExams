@@ -174,7 +174,8 @@ pub fn main() !void {
     var chosenAddress: []const u8 = undefined;
 
     if (userInput) |index| {
-        chosenAddress = ipAddresses.items[(std.fmt.parseUnsigned(u32, index, 10) catch 1) - 1];
+        const chosenIndex = std.fmt.parseUnsigned(u32, index, 10) catch 1;
+        chosenAddress = ipAddresses.items[(if (chosenIndex < 1 or chosenIndex > ipAddresses.items.len) 1 else chosenIndex) - 1];
     } else {
         chosenAddress = ipAddresses.items[0];
     }
